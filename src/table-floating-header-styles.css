@@ -1,0 +1,15 @@
+/* table floating header*/
+*{box-sizing: border-box}
+.aggregatedTableContainer{
+  position: relative;
+  width:100%;
+  overflow-x: auto;
+  & > table.fixed{
+    position:absolute;
+    top:0;
+    width:auto;
+    display:none;
+    border:none;
+    & tbody{display:none !important;}
+  }
+}

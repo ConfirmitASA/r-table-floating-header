@@ -1,11 +1,11 @@
 {
-  "name": "ES6_test_framework_boilerplate",
-  "version": "0.2.0",
-  "description": "Boilerplate for ES6 modules with Karma & Jasmine",
+  "name": "r-table-floating-header",
+  "version": "0.1.0",
+  "description": "Floating header for aggregated tables",
   "main": "src/main.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ConfirmitASA/ES6_test_framework_boilerplate.git"
+    "url": "https://github.com/ConfirmitASA/r-table-floating-header.git"
   },
   "scripts": {
     "build": "npm run clean && npm run build:prd",
@@ -14,12 +14,10 @@
     "clean": "rimraf dist build",
     "lint": "eslint src",
     "docs": "node_modules/.bin/jsdoc --configure jsdoc.conf --verbose",
-    "docs-commit": "git subtree push --prefix docs/ES6_test_framework_boilerplate origin gh-pages",
+    "docs-commit": "git subtree push --prefix docs/r-table-floating-header/0.1.0 origin gh-pages",
     "test": "karma start --single-run --no-auto-watch karma.config.js",
     "report-coverage": "codecov -f coverage/lcov.info"
   },
-  "keywords": [
-  ],
   "author": "ConfirmitASA",
   "license": "",
   "devDependencies": {
@@ -62,5 +60,9 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "codecov": ">1.0.0"
+  },
+  "dependencies": {
+    "r-reporal-base": "github:confirmitasa/r-reportal-base"
   }
+
 }
