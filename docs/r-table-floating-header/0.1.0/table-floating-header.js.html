@@ -22,7 +22,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TableFloatingHeader.html">TableFloatingHeader</a><ul class='methods'><li data-type='method'><a href="TableFloatingHeader.html#.calcOffsetHeight">calcOffsetHeight</a></li><li data-type='method'><a href="TableFloatingHeader.html#.cloneHeader">cloneHeader</a></li><li data-type='method'><a href="TableFloatingHeader.html#.wrapTable">wrapTable</a></li><li data-type='method'><a href="TableFloatingHeader.html#requestTick">requestTick</a></li><li data-type='method'><a href="TableFloatingHeader.html#resizeFixed">resizeFixed</a></li><li data-type='method'><a href="TableFloatingHeader.html#scrollFixed">scrollFixed</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TableFloatingHeader.html">TableFloatingHeader</a><ul class='methods'><li data-type='method'><a href="TableFloatingHeader.html#.calcOffsetHeight">calcOffsetHeight</a></li><li data-type='method'><a href="TableFloatingHeader.html#.cloneHeader">cloneHeader</a></li><li data-type='method'><a href="TableFloatingHeader.html#.setVisibility">setVisibility</a></li><li data-type='method'><a href="TableFloatingHeader.html#.wrapTable">wrapTable</a></li><li data-type='method'><a href="TableFloatingHeader.html#requestTick">requestTick</a></li><li data-type='method'><a href="TableFloatingHeader.html#resizeFixed">resizeFixed</a></li><li data-type='method'><a href="TableFloatingHeader.html#scrollFixed">scrollFixed</a></li></ul></li></ul><h3>Events</h3><ul><li><a href="TableFloatingHeader.html#~event:reportal-fixed-header-hidden">reportal-fixed-header-hidden</a></li><li><a href="TableFloatingHeader.html#~event:reportal-fixed-header-visible">reportal-fixed-header-visible</a></li></ul>
 </nav>
 
 <div id="main">
@@ -40,6 +40,7 @@
             <pre class="prettyprint source linenums"><code>import ReportalBase from "r-reporal-base";
 
 var TableFloatingHeaderStyle = require('./table-floating-header-styles.css');
+
 /**
  * FixedHeader class enables a fixed header appear on tables that have `.reportal-fixed-header` class when the table header is scrolled under address bar.
  */
@@ -54,12 +55,24 @@ class TableFloatingHeader {
 
     TableFloatingHeader.wrapTable(source);
 
-    /** @memberOf TableFloatingHeader */
+    /**
+     *  The cloned floating header without TBODY
+     *  @type {HTMLTableElement}
+     *  @memberOf TableFloatingHeader
+     *  */
     this.header  = TableFloatingHeader.cloneHeader(source);
-    //TableFloatingHeader.resizeFixed(source, header);
-    /** @memberOf TableFloatingHeader */
+
+    /**
+     *  The source table
+     *  @type {HTMLTableElement}
+     *  @memberOf TableFloatingHeader
+     *  */
     this.source = source;
-    /** @memberOf TableFloatingHeader */
+    /**
+     *  Visibility status of the table
+     *  @type {Boolean}
+     *  @memberOf TableFloatingHeader
+     *  */
     this.visible = false;
 
     this._meta = {
@@ -78,12 +91,31 @@ class TableFloatingHeader {
 
   /**
    * calculates offset height of the table
+   * @param {HTMLTableElement} source - source table
    * */
   static calcOffsetHeight(source){
     this._meta.tableOffsetTop = source.parentNode.offsetTop;
     this._meta.tableOffsetBottom = source.parentNode.offsetTop + source.offsetHeight - this._meta.sourceTHEAD.offsetHeight;
   }
 
+  /**
+   * Event reporting that a header is visible
+   * @event TableFloatingHeader~reportal-fixed-header-visible
+   */
+
+  /**
+   * Event reporting that a header is hidden
+   * @event TableFloatingHeader~reportal-fixed-header-hidden
+   */
+
+  /**
+   * sets visibility of the table
+   * @param {HTMLTableElement} source - source table
+   * @param {HTMLTableElement} header - cloned table with header only
+   * @param {Boolean} visible - visibility status
+   * @fires TableFloatingHeader~reportal-fixed-header-visible
+   * @fires TableFloatingHeader~reportal-fixed-header-visible
+   * */
   static setVisibility(source, header, visible){
     if(visible){
       header.style.display='table';
@@ -130,29 +162,50 @@ class TableFloatingHeader {
     }
   }
 
+  static _resizeCallback(){
+    let initialHeader = this._meta.sourceTHEAD.querySelectorAll('tr>*'),
+      clonedHeader = this.header.querySelectorAll('thead>tr>*'),
+      headerWidth = this.source.offsetWidth + 'px',
+      widths=[];
+    // do reflow
+    for(let i=0;i&lt;initialHeader.length;i++){
+      widths.push(initialHeader[i].offsetWidth);
+    }
+    //do repaint
+    for(let c=0;c&lt;clonedHeader.length;c++){
+      clonedHeader[c].style.width = widths[c] + 'px';
+    }
+    this.header.style.width = headerWidth;
+
+    TableFloatingHeader.calcOffsetHeight.call(this,this.source); //recalc height of the table after reflow
+    this._meta.ticking=false;
+    this.scrollFixed(); // to compensate top offset in case after resize the table is less in height and top has changed
+  }
+
   /**
    * Calculates widths for all columns in the fixed header based on the `source`
    * */
   resizeFixed(){
-    this.requestTick(()=>{
-      let initialHeader = this._meta.sourceTHEAD.querySelectorAll('tr>*'),
-          clonedHeader = this.header.querySelectorAll('thead>tr>*'),
-          headerWidth = this.source.offsetWidth + 'px',
-          widths=[];
-      // do reflow
-      for(let i=0;i&lt;initialHeader.length;i++){
-        widths.push(initialHeader[i].offsetWidth);
-      }
-      //do repaint
-      for(let c=0;c&lt;clonedHeader.length;c++){
-        clonedHeader[c].style.width = widths[c] + 'px';
-      }
-      this.header.style.width = headerWidth;
+    this.requestTick(TableFloatingHeader._resizeCallback.bind(this))
+  }
 
-      TableFloatingHeader.calcOffsetHeight.call(this,this.source); //recalc height of the table after reflow
-      this._meta.ticking=false;
-      this.scrollFixed(); // to compensate top offset in case after resize the table is less in height and top has changed
-    })
+
+  static _scrollCallback(){
+    let offset = this._meta.lastScrollY,
+      tableOffsetTop = this._meta.tableOffsetTop,
+      tableOffsetBottom = this._meta.tableOffsetBottom;
+    if((offset &lt; tableOffsetTop || offset > tableOffsetBottom) &amp;&amp; this.visible){
+      this.visible = false;
+      TableFloatingHeader.setVisibility(this.source,this.header,false);
+    }
+    else if(offset >= tableOffsetTop &amp;&amp; offset &lt;= tableOffsetBottom){
+      this.header.style.top=offset-tableOffsetTop+'px';
+      if(!this.visible){
+        this.visible=true;
+        TableFloatingHeader.setVisibility(this.source,this.header,true);
+      }
+    }
+    this._meta.ticking=false;
   }
 
 
@@ -160,25 +213,8 @@ class TableFloatingHeader {
    * Displays a fixed header when the table header is scrolled off the screen
    * */
   scrollFixed() {
-    let Yoffset = window.pageYOffset;
       this._meta.lastScrollY = window.pageYOffset;
-      this.requestTick(()=>{
-        let offset = this._meta.lastScrollY,
-          tableOffsetTop = this._meta.tableOffsetTop,
-          tableOffsetBottom = this._meta.tableOffsetBottom;
-        if((offset &lt; tableOffsetTop || offset > tableOffsetBottom) &amp;&amp; this.visible){
-          this.visible = false;
-          TableFloatingHeader.setVisibility(this.source,this.header,false);
-        }
-        else if(offset >= tableOffsetTop &amp;&amp; offset &lt;= tableOffsetBottom){
-          this.header.style.top=offset-tableOffsetTop+'px';
-          if(!this.visible){
-            this.visible=true;
-            TableFloatingHeader.setVisibility(this.source,this.header,true);
-          }
-        }
-        this._meta.ticking=false;
-      });
+      this.requestTick(TableFloatingHeader._scrollCallback.bind(this));
   }
 
 }
@@ -198,7 +234,7 @@ export default TableFloatingHeader;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Oct 25 2016 15:45:51 GMT+0300 (Russia TZ 2 Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Oct 25 2016 17:37:19 GMT+0300 (Russia TZ 2 Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

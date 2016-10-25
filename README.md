@@ -1,46 +1,51 @@
-[![Build Status](https://travis-ci.org/jahglow/r-sort-table.svg?branch=master)](https://travis-ci.org/jahglow/r-sort-table) [![codecov](https://codecov.io/gh/jahglow/r-sort-table/branch/master/graph/badge.svg)](https://codecov.io/gh/jahglow/r-sort-table)
+# TableFloatingHeader
 
-# ES6 Karma Jasmine Webpack Boilerplate
+Creates a clone of the initial table (adds a `.fixed` class to the floating header table and deletes its TBODY), wraps them both into a `div.aggregatedTableContainer` and sets up a resize and scroll listeners.
+On resize it recalculates header cells widths and on scroll it checks if the table is hidden under the top of viewport and displays the cloned header. They both use `requestAnimationFrame` for performance on draws.
+This function can be called on any aggregated table. It's advised to be used on vertically long tables or in cases when the vertical screen space is quite narrow (e.g. on mobiles). 
 
-_No Grunt/Gulp required!_
+## Browser support
 
-Boilerplate for building a client-based JavaScript library in ES6 using the following components:
+Usage of `requestAnimationFrame` limits this script usage to the following browsers
 
-* [Babel](https://babeljs.io/)
-* [webpack](https://webpack.github.io/)
-* [Jasmine](http://jasmine.github.io/)
-* [Karma](http://karma-runner.github.io/)
-* babel-plugin-istanbul
-* [ESLint](http://eslint.org/) with [eslint-config-airbnb](https://github.com/airbnb/javascript)
-* PostCSS with Autoprefixer (for autoprefixing vendors), includes and CSSnext (for css custom-properties etc.) and cssnano (for CSS minification)
-* JSDoc3 to auto-generate JSDoc documentation for JS that uses JSDoc comment syntax.
+| Browser        | Version       |
+| -------------- |--------------:|
+| IE             | **10+**           |
+| Edge           | 12+           | 
+| Chrome         | 10+           |
+| Firefox        | 4+            |
+| Firefox Android| 49            |
+| Safari         | 6+            |
+| Opera          | 15+           |
+| iOS Safari     | 6.1+          |
+| Opera Mini     | **NO**        |
+| Opera Mobile   | 37            |
+| Android        | **4.4+**          |
+| Chrome Android | 53            |
+| IE Mobile      | 10            |
+| UC Browser Android| 11            |
+| Samsung Internet    | 4             |
 
 
-##SRC
+## Usage
 
-`./src` folder must contain at least `main.js` file. There you may write your code, but preferably write it in other files that are named according to their main Class and import them into main.js
-If you have a `.css` file that need to be included, import it into the top of `main.js` file via `require("./file/path/relative/to/main/js/file/styles.css")` which may include imports of other css files via `@import "./path/to/file.css"`. This `.css` file will be run through PostCSS.
-These two files are the ones that import content (via `require("path/to/module.js")` or `import ClassName from "./class/path/ClassName.js"` and via `@import "path/to/module.css";`) from other files located in the same folder/nested folders (if you need several files with classes)
-or act as the only js/css files for the module.
-If you plan to write tests using fixtures ([using Jasmine-jquery](https://github.com/velesin/jasmine-jquery) with [karma-jasmine-jquery](https://github.com/bessdsv/karma-jasmine-jquery)) (both shipped in this bundle)
-put your fixtures under `/src/__tests__/fixtures/fixtureFile.html`  (which would contain the code of your fixture omitting `<html>` and `<body>` tags) or `/src/__tests__/fixtures/fixtureFile.json`. In your tests you need to include the fixture and then you'll be able to reference any HTML tags by jquery selectors via `$j('.someSelector')` like below:
+In your bundle project you may install this module by executing `npm install --save confirmitasa/r-table-floating-header` in terminal. In your script :
 
 ```javascript
-describe('Fixture example', () => {
+// at the top of the script
+import TableFloatingHeader from 'r-table-floating-header';
 
-  beforeEach(()=>{ // or beforeAll()
-    jasmine.getFixtures().fixturesPath = 'base/src/__tests__/fixtures'; // do not change this line, it's pointing to the correct folder with fixtures 
-    loadFixtures('table-nested-headers.html'); // use this file as a fixture
-  });
-
-  it('can tests if the fixture loaded', () => {
-    expect($j('#confirmit_agg_table')).toExist();
-  });
-});
-
+//in the function to initialise it:
+var fHeader = new TableFloatingHeader(document.querySelector('.tableClassYouWantToPass'));
+// fHeader.header - the floating table header element
 ```
 
-To make use of the fixtures please refer to [Jasmine-jquery API documentation](https://github.com/velesin/jasmine-jquery)
+If you want to use it separately in your project rather than including into the bundle, build it with `npm install && npm run build`, upload the `css` and `js` files to File Library and reference them on the page.
+Then you may call the function under `Reportal` namespace:
+
+``` javascript
+var fHeader = new Reportal.TableFloatingHeader(document.querySelector('.tableClassYouWantToPass'));
+```
 
 ### Commands (configured in package.json)
 

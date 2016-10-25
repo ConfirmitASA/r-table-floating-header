@@ -22,7 +22,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TableFloatingHeader.html">TableFloatingHeader</a><ul class='methods'><li data-type='method'><a href="TableFloatingHeader.html#.calcOffsetHeight">calcOffsetHeight</a></li><li data-type='method'><a href="TableFloatingHeader.html#.cloneHeader">cloneHeader</a></li><li data-type='method'><a href="TableFloatingHeader.html#.wrapTable">wrapTable</a></li><li data-type='method'><a href="TableFloatingHeader.html#requestTick">requestTick</a></li><li data-type='method'><a href="TableFloatingHeader.html#resizeFixed">resizeFixed</a></li><li data-type='method'><a href="TableFloatingHeader.html#scrollFixed">scrollFixed</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TableFloatingHeader.html">TableFloatingHeader</a><ul class='methods'><li data-type='method'><a href="TableFloatingHeader.html#.calcOffsetHeight">calcOffsetHeight</a></li><li data-type='method'><a href="TableFloatingHeader.html#.cloneHeader">cloneHeader</a></li><li data-type='method'><a href="TableFloatingHeader.html#.setVisibility">setVisibility</a></li><li data-type='method'><a href="TableFloatingHeader.html#.wrapTable">wrapTable</a></li><li data-type='method'><a href="TableFloatingHeader.html#requestTick">requestTick</a></li><li data-type='method'><a href="TableFloatingHeader.html#resizeFixed">resizeFixed</a></li><li data-type='method'><a href="TableFloatingHeader.html#scrollFixed">scrollFixed</a></li></ul></li></ul><h3>Events</h3><ul><li><a href="TableFloatingHeader.html#~event:reportal-fixed-header-hidden">reportal-fixed-header-hidden</a></li><li><a href="TableFloatingHeader.html#~event:reportal-fixed-header-visible">reportal-fixed-header-visible</a></li></ul>
 </nav>
 
 <div id="main">
@@ -46,38 +46,89 @@
 
 
     <section class="readme">
-        <article><p><a href="https://travis-ci.org/jahglow/r-sort-table"><img src="https://travis-ci.org/jahglow/r-sort-table.svg?branch=master" alt="Build Status"></a> <a href="https://codecov.io/gh/jahglow/r-sort-table"><img src="https://codecov.io/gh/jahglow/r-sort-table/branch/master/graph/badge.svg" alt="codecov"></a></p>
-<h1>ES6 Karma Jasmine Webpack Boilerplate</h1><p><em>No Grunt/Gulp required!</em></p>
-<p>Boilerplate for building a client-based JavaScript library in ES6 using the following components:</p>
-<ul>
-<li><a href="https://babeljs.io/">Babel</a></li>
-<li><a href="https://webpack.github.io/">webpack</a></li>
-<li><a href="http://jasmine.github.io/">Jasmine</a></li>
-<li><a href="http://karma-runner.github.io/">Karma</a></li>
-<li>babel-plugin-istanbul</li>
-<li><a href="http://eslint.org/">ESLint</a> with <a href="https://github.com/airbnb/javascript">eslint-config-airbnb</a></li>
-<li>PostCSS with Autoprefixer (for autoprefixing vendors), includes and CSSnext (for css custom-properties etc.) and cssnano (for CSS minification)</li>
-<li>JSDoc3 to auto-generate JSDoc documentation for JS that uses JSDoc comment syntax.</li>
-</ul>
-<p>##SRC</p>
-<p><code>./src</code> folder must contain at least <code>main.js</code> file. There you may write your code, but preferably write it in other files that are named according to their main Class and import them into main.js
-If you have a <code>.css</code> file that need to be included, import it into the top of <code>main.js</code> file via <code>require(&quot;./file/path/relative/to/main/js/file/styles.css&quot;)</code> which may include imports of other css files via <code>@import &quot;./path/to/file.css&quot;</code>. This <code>.css</code> file will be run through PostCSS.
-These two files are the ones that import content (via <code>require(&quot;path/to/module.js&quot;)</code> or <code>import ClassName from &quot;./class/path/ClassName.js&quot;</code> and via <code>@import &quot;path/to/module.css&quot;;</code>) from other files located in the same folder/nested folders (if you need several files with classes)
-or act as the only js/css files for the module.
-If you plan to write tests using fixtures (<a href="https://github.com/velesin/jasmine-jquery">using Jasmine-jquery</a> with <a href="https://github.com/bessdsv/karma-jasmine-jquery">karma-jasmine-jquery</a>) (both shipped in this bundle)
-put your fixtures under <code>/src/__tests__/fixtures/fixtureFile.html</code>  (which would contain the code of your fixture omitting <code>&lt;html&gt;</code> and <code>&lt;body&gt;</code> tags) or <code>/src/__tests__/fixtures/fixtureFile.json</code>. In your tests you need to include the fixture and then you'll be able to reference any HTML tags by jquery selectors via <code>$j('.someSelector')</code> like below:</p>
-<pre class="prettyprint source lang-javascript"><code>describe('Fixture example', () => {
+        <article><h1>TableFloatingHeader</h1><p>Creates a clone of the initial table (adds a <code>.fixed</code> class to the floating header table and deletes its TBODY), wraps them both into a <code>div.aggregatedTableContainer</code> and sets up a resize and scroll listeners.
+On resize it recalculates header cells widths and on scroll it checks if the table is hidden under the top of viewport and displays the cloned header. They both use <code>requestAnimationFrame</code> for performance on draws.
+This function can be called on any aggregated table. It's advised to be used on vertically long tables or in cases when the vertical screen space is quite narrow (e.g. on mobiles). </p>
+<h2>Browser support</h2><p>Usage of <code>requestAnimationFrame</code> limits this script usage to the following browsers</p>
+<table>
+<thead>
+<tr>
+<th>Browser</th>
+<th style="text-align:right">Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IE</td>
+<td style="text-align:right"><strong>10+</strong></td>
+</tr>
+<tr>
+<td>Edge</td>
+<td style="text-align:right">12+</td>
+</tr>
+<tr>
+<td>Chrome</td>
+<td style="text-align:right">10+</td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td style="text-align:right">4+</td>
+</tr>
+<tr>
+<td>Firefox Android</td>
+<td style="text-align:right">49</td>
+</tr>
+<tr>
+<td>Safari</td>
+<td style="text-align:right">6+</td>
+</tr>
+<tr>
+<td>Opera</td>
+<td style="text-align:right">15+</td>
+</tr>
+<tr>
+<td>iOS Safari</td>
+<td style="text-align:right">6.1+</td>
+</tr>
+<tr>
+<td>Opera Mini</td>
+<td style="text-align:right"><strong>NO</strong></td>
+</tr>
+<tr>
+<td>Opera Mobile</td>
+<td style="text-align:right">37</td>
+</tr>
+<tr>
+<td>Android</td>
+<td style="text-align:right"><strong>4.4+</strong></td>
+</tr>
+<tr>
+<td>Chrome Android</td>
+<td style="text-align:right">53</td>
+</tr>
+<tr>
+<td>IE Mobile</td>
+<td style="text-align:right">10</td>
+</tr>
+<tr>
+<td>UC Browser Android</td>
+<td style="text-align:right">11</td>
+</tr>
+<tr>
+<td>Samsung Internet</td>
+<td style="text-align:right">4</td>
+</tr>
+</tbody>
+</table>
+<h2>Usage</h2><p>In your bundle project you may install this module by executing <code>npm install --save confirmitasa/r-table-floating-header</code> in terminal. In your script :</p>
+<pre class="prettyprint source lang-javascript"><code>// at the top of the script
+import TableFloatingHeader from 'r-table-floating-header';
 
-  beforeEach(()=>{ // or beforeAll()
-    jasmine.getFixtures().fixturesPath = 'base/src/__tests__/fixtures'; // do not change this line, it's pointing to the correct folder with fixtures 
-    loadFixtures('table-nested-headers.html'); // use this file as a fixture
-  });
-
-  it('can tests if the fixture loaded', () => {
-    expect($j('#confirmit_agg_table')).toExist();
-  });
-});</code></pre><p>To make use of the fixtures please refer to <a href="https://github.com/velesin/jasmine-jquery">Jasmine-jquery API documentation</a></p>
-<h3>Commands (configured in package.json)</h3><ul>
+//in the function to initialise it:
+var fHeader = new TableFloatingHeader(document.querySelector('.tableClassYouWantToPass'));
+// fHeader.header - the floating table header element</code></pre><p>If you want to use it separately in your project rather than including into the bundle, build it with <code>npm install &amp;&amp; npm run build</code>, upload the <code>css</code> and <code>js</code> files to File Library and reference them on the page.
+Then you may call the function under <code>Reportal</code> namespace:</p>
+<pre class="prettyprint source lang-javascript"><code>var fHeader = new Reportal.TableFloatingHeader(document.querySelector('.tableClassYouWantToPass'));</code></pre><h3>Commands (configured in package.json)</h3><ul>
 <li><code>npm install</code> installs all dependencies of the project</li>
 <li><code>npm run build:prd</code> generates minified build files under <code>/dist</code> folder </li>
 <li><code>npm run build:dev</code> generates build files under <code>/dist</code> folder and starts watching all changes made to the project during this session, appending them to the build files</li>
@@ -99,7 +150,7 @@ Please make sure you have the <code>npm run docs-commit</code> command configure
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Oct 25 2016 15:45:51 GMT+0300 (Russia TZ 2 Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Oct 25 2016 17:37:19 GMT+0300 (Russia TZ 2 Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

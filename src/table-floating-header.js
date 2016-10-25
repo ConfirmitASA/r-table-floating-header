@@ -1,6 +1,7 @@
 import ReportalBase from "r-reporal-base";
 
 var TableFloatingHeaderStyle = require('./table-floating-header-styles.css');
+
 /**
  * FixedHeader class enables a fixed header appear on tables that have `.reportal-fixed-header` class when the table header is scrolled under address bar.
  */
@@ -15,12 +16,24 @@ class TableFloatingHeader {
 
     TableFloatingHeader.wrapTable(source);
 
-    /** @memberOf TableFloatingHeader */
+    /**
+     *  The cloned floating header without TBODY
+     *  @type {HTMLTableElement}
+     *  @memberOf TableFloatingHeader
+     *  */
     this.header  = TableFloatingHeader.cloneHeader(source);
-    //TableFloatingHeader.resizeFixed(source, header);
-    /** @memberOf TableFloatingHeader */
+
+    /**
+     *  The source table
+     *  @type {HTMLTableElement}
+     *  @memberOf TableFloatingHeader
+     *  */
     this.source = source;
-    /** @memberOf TableFloatingHeader */
+    /**
+     *  Visibility status of the table
+     *  @type {Boolean}
+     *  @memberOf TableFloatingHeader
+     *  */
     this.visible = false;
 
     this._meta = {
@@ -39,12 +52,31 @@ class TableFloatingHeader {
 
   /**
    * calculates offset height of the table
+   * @param {HTMLTableElement} source - source table
    * */
   static calcOffsetHeight(source){
     this._meta.tableOffsetTop = source.parentNode.offsetTop;
     this._meta.tableOffsetBottom = source.parentNode.offsetTop + source.offsetHeight - this._meta.sourceTHEAD.offsetHeight;
   }
 
+  /**
+   * Event reporting that a header is visible
+   * @event TableFloatingHeader~reportal-fixed-header-visible
+   */
+
+  /**
+   * Event reporting that a header is hidden
+   * @event TableFloatingHeader~reportal-fixed-header-hidden
+   */
+
+  /**
+   * sets visibility of the table
+   * @param {HTMLTableElement} source - source table
+   * @param {HTMLTableElement} header - cloned table with header only
+   * @param {Boolean} visible - visibility status
+   * @fires TableFloatingHeader~reportal-fixed-header-visible
+   * @fires TableFloatingHeader~reportal-fixed-header-visible
+   * */
   static setVisibility(source, header, visible){
     if(visible){
       header.style.display='table';
