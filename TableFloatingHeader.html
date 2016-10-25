@@ -22,7 +22,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TableFloatingHeader.html">TableFloatingHeader</a><ul class='methods'><li data-type='method'><a href="TableFloatingHeader.html#.cloneHeader">cloneHeader</a></li><li data-type='method'><a href="TableFloatingHeader.html#.resizeFixed">resizeFixed</a></li><li data-type='method'><a href="TableFloatingHeader.html#.resizeThrottler">resizeThrottler</a></li><li data-type='method'><a href="TableFloatingHeader.html#.scrollFixed">scrollFixed</a></li><li data-type='method'><a href="TableFloatingHeader.html#.wrapTable">wrapTable</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="TableFloatingHeader.html">TableFloatingHeader</a><ul class='methods'><li data-type='method'><a href="TableFloatingHeader.html#.calcOffsetHeight">calcOffsetHeight</a></li><li data-type='method'><a href="TableFloatingHeader.html#.cloneHeader">cloneHeader</a></li><li data-type='method'><a href="TableFloatingHeader.html#.wrapTable">wrapTable</a></li><li data-type='method'><a href="TableFloatingHeader.html#requestTick">requestTick</a></li><li data-type='method'><a href="TableFloatingHeader.html#resizeFixed">resizeFixed</a></li><li data-type='method'><a href="TableFloatingHeader.html#scrollFixed">scrollFixed</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
@@ -57,7 +57,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="TableFloatingHeader"><span class="type-signature"></span>new TableFloatingHeader<span class="signature">(source, visible<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="TableFloatingHeader"><span class="type-signature"></span>new TableFloatingHeader<span class="signature">(source)</span><span class="type-signature"></span></h4>
 
     
 
@@ -131,11 +131,7 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
-        
-        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -160,61 +156,10 @@
             </td>
 
             
-                <td class="attributes">
-                
 
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last"><p>source table that needs a cloned header</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>visible</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    <code>false</code>
-                
-                </td>
-            
-
-            <td class="description last"><p>if the header is visible on init</p></td>
         </tr>
 
     
@@ -250,9 +195,274 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".this.header"><span class="type-signature">(static) </span>this.header<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".this.source"><span class="type-signature">(static) </span>this.source<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".this.visible"><span class="type-signature">(static) </span>this.visible<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line24">line 24</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".calcOffsetHeight"><span class="type-signature">(static) </span>calcOffsetHeight<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line43">line 43</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>calculates offset height of the table</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
             
@@ -271,7 +481,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line50">line 50</a>
+        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line71">line 71</a>
     </li></ul></dd>
     
 
@@ -311,7 +521,7 @@
 
 
 <div class="description">
-    <p>clones header of <code>this.source</code> table and appends to <code>this.wrapper</code></p>
+    <p>clones header of <code>source</code> table and appends to wrapper</p>
 </div>
 
 
@@ -343,7 +553,7 @@
 
     
 
-    <h4 class="name" id=".resizeFixed"><span class="type-signature">(static) </span>resizeFixed<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".wrapTable"><span class="type-signature">(static) </span>wrapTable<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -355,7 +565,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line65">line 65</a>
+        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line61">line 61</a>
     </li></ul></dd>
     
 
@@ -395,7 +605,7 @@
 
 
 <div class="description">
-    <p>Calculates widths for all columns in the fixed header based on the <code>this.source</code></p>
+    <p>wraps the <code>source</code> table into a <code>div.aggregatedTableContainer</code></p>
 </div>
 
 
@@ -427,7 +637,7 @@
 
     
 
-    <h4 class="name" id=".resizeThrottler"><span class="type-signature">(static) </span>resizeThrottler<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="requestTick"><span class="type-signature"></span>requestTick<span class="signature">(callback)</span><span class="type-signature"></span></h4>
 
     
 
@@ -439,7 +649,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line98">line 98</a>
+        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line87">line 87</a>
     </li></ul></dd>
     
 
@@ -479,7 +689,140 @@
 
 
 <div class="description">
-    <p>a debouncing function to make resize not so expensive, calls <code>resizeFixed</code> @ 15fps</p>
+    <p>function that polls the callback</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>function that's going to be passed to <code>requestAnimationFrame</code> for execution</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="resizeFixed"><span class="type-signature"></span>resizeFixed<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line97">line 97</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Calculates widths for all columns in the fixed header based on the <code>source</code></p>
 </div>
 
 
@@ -511,7 +854,7 @@
 
     
 
-    <h4 class="name" id=".scrollFixed"><span class="type-signature">(static) </span>scrollFixed<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="scrollFixed"><span class="type-signature"></span>scrollFixed<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -523,7 +866,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line78">line 78</a>
+        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line123">line 123</a>
     </li></ul></dd>
     
 
@@ -591,90 +934,6 @@
 
 
         
-            
-
-    
-
-    <h4 class="name" id=".wrapTable"><span class="type-signature">(static) </span>wrapTable<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="table-floating-header.js.html">table-floating-header.js</a>, <a href="table-floating-header.js.html#line40">line 40</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>wraps a <code>this.source</code> table into a <code>div.aggregatedTableContainer</code></p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
     
 
     
@@ -692,7 +951,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Mon Oct 24 2016 18:47:21 GMT+0300 (Russia TZ 2 Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Tue Oct 25 2016 15:45:51 GMT+0300 (Russia TZ 2 Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
