@@ -10,3 +10,4 @@ ReportalBase.mixin(window.Reportal,{
   TableFloatingHeader
 });
 
+export default TableFloatingHeader
