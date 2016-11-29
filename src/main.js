@@ -3,7 +3,7 @@
  */
 
 import TableFloatingHeader from "./table-floating-header";
-import ReportalBase from "r-reporal-base/src/reportal-base";
+import ReportalBase from "r-reportal-base";
 
 window.Reportal = window.Reportal || {};
 ReportalBase.mixin(window.Reportal,{
