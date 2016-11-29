@@ -1,4 +1,4 @@
-import ReportalBase from "r-reporal-base";
+import ReportalBase from "r-reportal-base";
 
 var TableFloatingHeaderStyle = require('./table-floating-header-styles.css');
 
